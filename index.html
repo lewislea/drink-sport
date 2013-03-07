@@ -157,13 +157,13 @@
        </form> <!-- form ends after modal to make validation work in modal -->
 
             <!--Add Scores Modal -->
+          <form class="form-horizontal" id="scoreForm">
             <div id="scoreModal" class="modal modal-mini hide fade">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3>Final Score: <span id="stamp"></span>&nbspPlay</h3>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal">
 
                   <input id="passStamp"  type="hidden" value="">
                   <input id="passWhen" type="hidden" value="">
@@ -174,19 +174,20 @@
                   <div class="control-group">
                     <label id="homeTeamLabel" class="control-label">Home Name</label>
                     <div class="controls">
-                      <input type="number" id="inputHomeTeamScore" class="input-mini">
+                      <input type="number" id="inputHomeTeamScore" name="homeTeamScore" class="input-mini">
                     </div>
                   </div>
                   <div class="control-group">
                     <label id="awayTeamLabel" class="control-label">Away Name</label>
                     <div class="controls">
-                      <input type="number" id="inputAwayTeamScore" class="input-mini">
+                      <input type="number" id="inputAwayTeamScore" name="awayTeamScore" class="input-mini">
                     </div>
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
-                <a data-dismiss="modal" aria-hidden="true" class="btn" onclick="logGameOutcome()">commit -m "scores"</a>
+                <button id="submitScore" type="submit" class="btn btn-primary">Submit</button>
+                <!-- <a data-dismiss="modal" aria-hidden="true" class="btn" onclick="logGameOutcome()">commit -m "scores"</a> -->
               </div>
             </div><!--End Add Scores Modal -->
 

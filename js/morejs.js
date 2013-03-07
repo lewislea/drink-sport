@@ -352,6 +352,52 @@ var blankSchedule8 = [
 function logScoreModal(htn, hti, atn, ati, stamp, when, game) {
   //launch modal
   $('#scoreModal').modal('show');
+
+  //VALIDATE SCORE FORM
+//Begin validation courtesy of [jQuery Validation Plugin](http://bassistance.de/jquery-plugins/jquery-plugin-validation/) - Form validation made easy
+jQuery.validator.addMethod("notEqual", function(value, element, param) {
+ return this.optional(element) || value != $(param).val();
+}, "There's no tying in baseball...please re-enter score");
+
+
+var scoreValidator = $("#scoreForm").validate({
+       rules: {
+        homeTeamScore: {
+              required: true,
+              digits : true
+            },
+              // unique: true},
+        awayTeamScore: {
+              required : true,
+              minlength : 1,
+              digits : true,
+              notEqual: "#inputHomeTeamScore"
+
+              // unique: true
+          }
+
+        }, //end of rules
+       messages: {
+        homeTeamScore : {
+          required: "Please enter a number",
+          minlength : "Please enter a score."
+       },
+        awayTeamScore : {
+          required: "Please enter a number",
+          minlength : "Please enter a score.",
+      }
+    }, //end messages
+}); //end validate
+
+$("#submitScore").click(function(){
+    if($('#scoreForm').valid() == true){
+  logGameOutcome()
+  $("#scoreModal").modal('hide');
+}
+return false;
+
+}); //end click
+
   //set text on page
   $("span[id='stamp']").text(stamp);
   $("label[id='homeTeamLabel']").text(htn);
