@@ -1,5 +1,6 @@
-$(document).ready(function () {
+ $(document).ready(function () {
   track("<i class='icon-file'></i> Document Ready");
+
 
   getFromDatabase();  
 $('#myModal').on('shown', function () {
@@ -35,6 +36,31 @@ var validator = $("#signupForm").validate({
       }
     }, //end messages
 }); //end validate
+
+// var scoreValidator = $("#commit_scores").validate({
+//        rules: {
+//         homeTeamScoreinput: {
+//           required: true,
+//           digits: true,
+//           maxlength : 2
+//         },
+//         awayTeamScoreinput : { 
+//           homeTeamScoreinput: 
+//           required: true,
+//           digits: true,
+//           maxlength : 2}
+       
+//        messages: {
+//         awayTeamScoreinput : {
+//           digits : "the score must be a number."
+//        },
+//        homeTeamScoreinput : {
+//           digits : "the score must be a number."
+//        },
+//       }
+//     }, //end messages
+// }); //end validate
+
 
 $("#addTeam").click(function(){
     if($('#signupForm').valid() == true){
@@ -79,6 +105,47 @@ function addTeam() {
     clearForm();
     validator.resetForm();
   });
+
+// **********added
+   
+$("#scoreForm").validate({
+       rules: {
+        homeTeamScoreinput: {
+          required: true,
+          digits: true,
+          maxlength : 2
+          },
+        awayTeamScoreinput : { 
+          required: true,
+          digits: true,
+          maxlength : 2
+          }
+        },//end rules
+       
+       messages: {
+        awayTeamScoreinput : {
+          digits : "the score must be a number."
+       },
+       homeTeamScoreinput : {
+          digits : "the score must be a number."
+       },
+    } //end messages
+}); //end validate
+
+$("#commit_scores").click(function(){
+  if($('#scoreForm').valid() == true) {
+    logGameOutcome();
+  }
+  else {
+    //alert("scores can be numeric only. please try again");
+    clearForm();
+    
+  }
+   });//end click
+  
+    
+       
+
 
 }); // end ready
 
@@ -163,6 +230,9 @@ function clearForm(){
     $('#signupForm').each (function(){  
         this.reset();
    }); 
+    $('#scoreForm').each (function(){  
+        this.reset();
+  });
   };
 
   function startSeason() {
@@ -374,6 +444,21 @@ function logGameOutcome() {
     homeTeamScore: $("#inputHomeTeamScore").val(),
     awayTeamScore: $("#inputAwayTeamScore").val(),
   };
+
+ 
+if ( gameOutcome.homeTeamScore === isNaN(gameOutcome.homeTeamScore) )
+      {
+        clearForm();
+        confirm("you must enter a number. please re-enter scores.");
+        //$('#scoreModal').modal('trigger');
+      }
+else if (parseFloat(gameOutcome.homeTeamScore) === parseFloat(gameOutcome.awayTeamScore))
+      {
+        clearForm();
+        confirm("no ties games are allowed. please play extra innings and re-enter scores.");
+      }
+else {
+
   $.ajax({
     url: 'backliftapp/outcomes',
     type: "POST",
@@ -388,12 +473,7 @@ function logGameOutcome() {
       } else if (parseFloat(gameOutcome.homeTeamScore) < parseFloat(gameOutcome.awayTeamScore)) {
         increment(gameOutcome.homeTeamId, "losses", "1");
         increment(gameOutcome.awayTeamId, "wins", "1");
-      } else if (parseFloat(gameOutcome.homeTeamScore) === parseFloat(gameOutcome.awayTeamScore)) {
-        increment(gameOutcome.homeTeamId, "wins", ".5");
-        increment(gameOutcome.homeTeamId, "losses", ".5");
-        increment(gameOutcome.awayTeamId, "wins", ".5");
-        increment(gameOutcome.awayTeamId, "losses", ".5");   
-      }
+      } 
 
       // Clear Imput Fields
       $("#inputHomeTeamScore").val("");
@@ -406,6 +486,7 @@ function logGameOutcome() {
 
     }
   }); // end ajax
+}//end else
 }; // end log game outcome
 
 

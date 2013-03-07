@@ -1,4 +1,7 @@
 <!DOCTYPE HTML>
+
+
+<!-- hey what's up -->
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -13,7 +16,7 @@
   
   <body>
 
-<!-- fork ribbon -->
+
 <a href="https://github.com/farfromguam/drink-sport"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 
     <div class="container">
@@ -157,13 +160,15 @@
        </form> <!-- form ends after modal to make validation work in modal -->
 
             <!--Add Scores Modal -->
+           <form class="form-horizontal" id="scoreForm">
             <div id="scoreModal" class="modal modal-mini hide fade">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3>Final Score: <span id="stamp"></span>&nbspPlay</h3>
               </div>
+              
               <div class="modal-body">
-                <form class="form-horizontal">
+               
 
                   <input id="passStamp"  type="hidden" value="">
                   <input id="passWhen" type="hidden" value="">
@@ -174,21 +179,24 @@
                   <div class="control-group">
                     <label id="homeTeamLabel" class="control-label">Home Name</label>
                     <div class="controls">
-                      <input type="number" id="inputHomeTeamScore" class="input-mini">
+                      <input type="number" data-error="it's got to be a number" name="homeTeamScoreinput" id="inputHomeTeamScore" class="input-mini digits">
                     </div>
                   </div>
                   <div class="control-group">
                     <label id="awayTeamLabel" class="control-label">Away Name</label>
                     <div class="controls">
-                      <input type="number" id="inputAwayTeamScore" class="input-mini">
+                      <input type="number" data-error="it's got to be a number" name="awayTeamScoreinput" id="inputAwayTeamScore" class="input-mini digits">
                     </div>
                   </div>
-                </form>
+                 
+               
+                               <div class="modal-footer">
+                <button type = "submit" aria-hidden="true" class="btn" id="commit_scores">commit -m "scores"</button>
               </div>
-              <div class="modal-footer">
-                <a data-dismiss="modal" aria-hidden="true" class="btn" onclick="logGameOutcome()">commit -m "scores"</a>
               </div>
+
             </div><!--End Add Scores Modal -->
+           </form>
 
         </div>
       </div>
